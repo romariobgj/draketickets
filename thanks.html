@@ -113,15 +113,31 @@
     var ticketType = getUrlParameter('ticket');
     var ticketPrice = parseFloat(getUrlParameter('price'));
 
-    // Disparar evento Purchase apenas se os parâmetros forem válidos
-    if (ticketType && !isNaN(ticketPrice) && ticketPrice > 0) {
-      fbq('track', 'Purchase', {
-        content_name: ticketType,
-        content_type: 'ticket',
-        content_ids: [ticketType.toLowerCase().replace(' ', '_')],
-        value: ticketPrice,
-        currency: 'GBP'
-      });
+    // Logs para depuração
+    console.log('URL da página:', window.location.href);
+    console.log('ticketType:', ticketType);
+    console.log('ticketPrice:', ticketPrice);
+    console.log('Pixel carregado:', typeof fbq !== 'undefined');
+
+    // Verificar se o Pixel está carregado e os parâmetros são válidos
+    if (typeof fbq !== 'undefined') {
+      if (ticketType && !isNaN(ticketPrice) && ticketPrice > 0) {
+        console.log('Disparando evento Purchase com:', { ticketType, ticketPrice });
+        fbq('track', 'Purchase', {
+          content_name: ticketType,
+          content_type: 'ticket',
+          content_ids: [ticketType.toLowerCase().replace(' ', '_')],
+          value: ticketPrice,
+          currency: 'GBP'
+        });
+      } else {
+        console.log('Evento Purchase não disparado. Motivo: Parâmetros inválidos', {
+          ticketType,
+          ticketPrice
+        });
+      }
+    } else {
+      console.log('Erro: Facebook Pixel não carregado');
     }
   </script>
 </body>
