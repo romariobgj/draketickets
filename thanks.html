@@ -4,24 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment Confirmed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <!-- Meta Pixel Code -->
   <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '696982119732355');
-    fbq('track', 'PageView');
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '696982119732355');
+  fbq('track', 'PageView');
+  fbq('track', 'Purchase');
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=696982119732355&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -117,28 +118,6 @@
     console.log('URL da página:', window.location.href);
     console.log('ticketType:', ticketType);
     console.log('ticketPrice:', ticketPrice);
-    console.log('Pixel carregado:', typeof fbq !== 'undefined');
-
-    // Verificar se o Pixel está carregado e os parâmetros são válidos
-    if (typeof fbq !== 'undefined') {
-      if (ticketType && !isNaN(ticketPrice) && ticketPrice > 0) {
-        console.log('Disparando evento Purchase com:', { ticketType, ticketPrice });
-        fbq('track', 'Purchase', {
-          content_name: ticketType,
-          content_type: 'ticket',
-          content_ids: [ticketType.toLowerCase().replace(' ', '_')],
-          value: ticketPrice,
-          currency: 'GBP'
-        });
-      } else {
-        console.log('Evento Purchase não disparado. Motivo: Parâmetros inválidos', {
-          ticketType,
-          ticketPrice
-        });
-      }
-    } else {
-      console.log('Erro: Facebook Pixel não carregado');
-    }
   </script>
 </body>
 </html>
