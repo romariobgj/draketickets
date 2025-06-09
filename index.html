@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twickets - Buy Tickets</title>
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '696982119732355');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=696982119732355&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -170,7 +187,7 @@
                         <p class="text-blue-400 font-semibold">£85</p>
                         <p class="faded-note">Most popular – sells out quickly</p>
                     </div>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">Select</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700" onclick="trackAddToCart('General Admission', 85)">Select</button>
                 </div>
                 <!-- Early Entry -->
                 <div class="ticket-card early-access bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('Early Entry', 130, this)">
@@ -184,7 +201,7 @@
                         <p class="text-blue-400 font-semibold">£130</p>
                         <p class="faded-note">Get closer to the stage – limited access</p>
                     </div>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">Select</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700" onclick="trackAddToCart('Early Entry', 130)">Select</button>
                 </div>
                 <!-- VIP Experience -->
                 <div class="ticket-card vip-experience bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('VIP Experience', 250, this)">
@@ -198,7 +215,7 @@
                         <p class="text-blue-400 font-semibold">£250</p>
                         <p class="faded-note">Includes 2 premium tickets – limited quantity</p>
                     </div>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">Select</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700" onclick="trackAddToCart('VIP Experience', 250)">Select</button>
                 </div>
                 <!-- VIP Table -->
                 <div class="ticket-card vip-table bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('VIP Table', 1500, this)">
@@ -212,14 +229,14 @@
                         <p class="text-blue-400 font-semibold">£1500</p>
                         <p class="faded-note">Private group zone – limited availability</p>
                     </div>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">Select</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700" onclick="trackAddToCart('VIP Table', 1500)">Select</button>
                 </div>
             </div>
         </section>
 
         <!-- Checkout Button -->
         <section>
-            <button id="checkoutBtn" class="w-full bg-green-600 text-white p-3 rounded-md text-sm hover:bg-blue-700 disabled:bg-gray-500" disabled>Reserve Access</button>
+            <button id="checkoutBtn" class="w-full bg-green-600 text-white p-3 rounded-md text-sm hover:bg-blue-700 disabled:bg-gray-500" disabled onclick="trackInitiateCheckout()">Reserve Access</button>
         </section>
     </main>
 
@@ -239,8 +256,40 @@
     </footer>
 
     <script>
+        // Track ViewContent event when the page loads
+        fbq('track', 'ViewContent', {
+            content_name: 'Drake – Wireless Festival 2025',
+            content_type: 'ticket',
+            content_ids: ['general_admission', 'early_entry', 'vip_experience', 'vip_table'],
+            currency: 'GBP'
+        });
+
+        // Function to track AddToCart event
+        function trackAddToCart(ticketType, price) {
+            fbq('track', 'AddToCart', {
+                content_name: ticketType,
+                content_type: 'ticket',
+                content_ids: [ticketType.toLowerCase().replace(' ', '_')],
+                value: price,
+                currency: 'GBP'
+            });
+        }
+
+        // Function to track InitiateCheckout event
+        function trackInitiateCheckout() {
+            if (selectedTicket) {
+                fbq('track', 'InitiateCheckout', {
+                    content_name: selectedTicket.type,
+                    content_type: 'ticket',
+                    content_ids: [selectedTicket.type.toLowerCase().replace(' ', '_')],
+                    value: selectedTicket.price,
+                    currency: 'GBP'
+                });
+            }
+        }
+
         let selectedTicket = null;
-        let selectedDate = '2025-07-13'; // Data padrão
+        let selectedDate = '2025-07-13'; // Default date
         let selectedCard = null;
 
         function checkDate() {
@@ -263,6 +312,7 @@
             if (selectedTicket && selectedDate) {
                 checkoutBtn.disabled = false;
                 checkoutBtn.onclick = () => {
+                    trackInitiateCheckout();
                     let checkoutUrl = '';
                     switch (selectedTicket.type) {
                         case 'General Admission':
@@ -285,7 +335,7 @@
             }
         }
 
-        // Inicializa o botão com a data padrão
+        // Initialize the checkout button with the default date
         updateCheckoutButton();
     </script>
 </body>
