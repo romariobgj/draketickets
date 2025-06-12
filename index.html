@@ -105,6 +105,36 @@
             font-weight: bold;
             border-radius: 4px;
         }
+        .premium {
+            position: relative;
+        }
+        .premium::before {
+            content: 'Premium';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            background-color: #10b981;
+            color: #1a202c;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        .luxury-table {
+            position: relative;
+        }
+        .luxury-table::before {
+            content: 'Luxury Table';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            background-color: #8b5cf6;
+            color: #1a202c;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
         .vip-experience {
             border-left: 4px solid #60a5fa;
         }
@@ -204,7 +234,7 @@
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700" onclick="trackAddToCart('Early Entry', 130)">Select</button>
                 </div>
                 <!-- VIP Experience -->
-                <div class="ticket-card vip-experience bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('VIP Experience', 250, this)">
+                <div class="ticket-card premium vip-experience bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('VIP Experience', 250, this)">
                     <div>
                         <h3 class="text-base font-bold inline-flex items-center">
                             VIP Experience
@@ -218,7 +248,7 @@
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700" onclick="trackAddToCart('VIP Experience', 250)">Select</button>
                 </div>
                 <!-- VIP Table -->
-                <div class="ticket-card vip-table bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('VIP Table', 1500, this)">
+                <div class="ticket-card luxury-table vip-table bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('VIP Table', 1500, this)">
                     <div>
                         <h3 class="text-base font-bold inline-flex items-center">
                             VIP Table
