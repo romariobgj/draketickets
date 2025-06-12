@@ -93,18 +93,6 @@
             font-weight: bold;
             border-radius: 4px;
         }
-        .early-access::before {
-            content: 'Early Access';
-            position: absolute;
-            top: -10px;
-            left: 0;
-            background-color: #f97316;
-            color: #1a202c;
-            padding: 2px 8px;
-            font-size: 12px;
-            font-weight: bold;
-            border-radius: 4px;
-        }
         .premium {
             position: relative;
         }
@@ -220,7 +208,7 @@
                     <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700" onclick="trackAddToCart('General Admission', 85)">Select</button>
                 </div>
                 <!-- Early Entry -->
-                <div class="ticket-card early-access bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('Early Entry', 130, this)">
+                <div class="ticket-card bg-gray-700 p-4 rounded-lg shadow-sm flex justify-between items-center" onclick="selectTicket('Early Entry', 130, this)">
                     <div>
                         <h3 class="text-base font-bold inline-flex items-center">
                             Early Entry
